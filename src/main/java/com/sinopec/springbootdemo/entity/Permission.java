@@ -3,8 +3,8 @@ package com.sinopec.springbootdemo.entity;
 
 public class Permission {
     private int id;
-    private String modelName;
     private String permission;
+    private String description;
 
     public int getId() {
         return id;
@@ -14,19 +14,19 @@ public class Permission {
         this.id = id;
     }
 
-    public String getModelName() {
-        return modelName;
-    }
-
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
-    }
-
     public String getPermission() {
         return permission;
     }
 
     public void setPermission(String permission) {
         this.permission = permission;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

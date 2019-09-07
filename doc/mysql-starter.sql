@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user
 (
     `USER_AutoID` int NOT NULL AUTO_INCREMENT,
-    `USERNAME`    varchar(16) DEFAULT NULL,
+    `USER_NAME`    varchar(16) DEFAULT NULL,
     `PASSWORD`    varchar(16) DEFAULT NULL,
     `ROLE_ID`     int         DEFAULT NULL,
     PRIMARY KEY (`USER_AutoID`)

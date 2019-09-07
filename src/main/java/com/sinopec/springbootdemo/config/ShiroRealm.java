@@ -1,7 +1,9 @@
 package com.sinopec.springbootdemo.config;
 
 import com.sinopec.springbootdemo.entity.Permission;
+import com.sinopec.springbootdemo.entity.Role;
 import com.sinopec.springbootdemo.entity.User;
+import com.sinopec.springbootdemo.service.RoleService;
 import com.sinopec.springbootdemo.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -15,6 +17,9 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
 
     // 权限获取（getAuthorizationInfo 方法） 获取指定身份的权限，并返回相关信息
@@ -42,8 +47,12 @@ public class ShiroRealm extends AuthorizingRealm {
             User user = userService.getUserByUserName(username);
             // 用户在登录页面输入的密码
             String inputPassword = new String((char[]) token.getCredentials());
+
             if (user.getPassword().equals(inputPassword)) { // 密码错误
-                return new SimpleAuthenticationInfo(username, user.getPassword(), getName());
+                // 获取用户的角色信息
+                Role role = roleService.getRoleByUserId(user.getId());
+                user.setRole(role);
+                return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
             } else {
                 throw new AuthenticationException();
             }
