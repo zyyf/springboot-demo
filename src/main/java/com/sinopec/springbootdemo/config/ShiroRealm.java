@@ -48,10 +48,10 @@ public class ShiroRealm extends AuthorizingRealm {
             // 用户在登录页面输入的密码
             String inputPassword = new String((char[]) token.getCredentials());
 
-            if (user.getPassword().equals(inputPassword)) { // 密码错误
+            if (user.getPassword().equals(inputPassword)) {
                 // 获取用户的角色信息
-                Role role = roleService.getRoleByUserId(user.getId());
-                user.setRole(role);
+//                Role role = roleService.getRoleByUserId(user.getId());
+//                user.setRole(role);
                 return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
             } else {
                 throw new AuthenticationException();

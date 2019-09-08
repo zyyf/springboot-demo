@@ -64,7 +64,7 @@ public class IndexController {
 
     @GetMapping("index")
     public String index(Map<String, Object> paramsMap) {
-        paramsMap.put("userName", "admin");
+        paramsMap.put("username", "admin");
         return "index";
     }
 }

@@ -14,7 +14,7 @@ public class UserDao {
 
 
     public User queryUserByUserName(String userName){
-        String sql = "SELECT USER_AutoID as ID,USER_NAME,PASSWORD FROM user WHERE USERNAME=?";
+        String sql = "SELECT USER_AutoID as ID,USER_NAME,PASSWORD FROM user WHERE USER_NAME=?";
         RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
         User user = jdbcTemplate.queryForObject(sql,rowMapper,userName);
         return user;
