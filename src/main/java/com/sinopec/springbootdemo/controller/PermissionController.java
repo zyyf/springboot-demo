@@ -69,6 +69,7 @@ public class PermissionController {
             pList.add(p);
         }
         model.addAttribute("permissionList", pList);
+        model.addAttribute("permission",new Permission());
         return "permission/add";
     }
 
