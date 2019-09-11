@@ -1,20 +1,22 @@
 package com.sinopec.springbootdemo.entity;
 
+import java.util.Date;
 import java.util.List;
 
 public class Role {
-    private int id;
+    private String uuid;
     private String roleName;
-    private String roleDesc;
+    private Date createTime;
+    private int delFlag;
 
     private List<Permission> permissionList;
 
-    public int getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getRoleName() {
@@ -25,12 +27,20 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public String getRoleDesc() {
-        return roleDesc;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setRoleDesc(String roleDesc) {
-        this.roleDesc = roleDesc;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public int getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(int delFlag) {
+        this.delFlag = delFlag;
     }
 
     public List<Permission> getPermissionList() {

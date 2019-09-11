@@ -3,6 +3,8 @@ package com.sinopec.springbootdemo.config;
 import com.sinopec.springbootdemo.entity.Permission;
 import com.sinopec.springbootdemo.entity.Role;
 import com.sinopec.springbootdemo.entity.User;
+import com.sinopec.springbootdemo.myUtil.RedisUtil;
+import com.sinopec.springbootdemo.service.PermissionService;
 import com.sinopec.springbootdemo.service.RoleService;
 import com.sinopec.springbootdemo.service.UserService;
 import org.apache.shiro.authc.*;
@@ -13,6 +15,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import java.util.List;
+
 public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
@@ -20,6 +24,12 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private PermissionService permissionService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
 
     // 权限获取（getAuthorizationInfo 方法） 获取指定身份的权限，并返回相关信息
@@ -30,10 +40,10 @@ public class ShiroRealm extends AuthorizingRealm {
         User userInfo = (User) principals.getPrimaryPrincipal();
 
         // 获取 User 的 Role 和 Permission 进行绑定
-        authorizationInfo.addRole(userInfo.getRole().getRoleName());
-        for (Permission permission : userInfo.getRole().getPermissionList()) {
-            authorizationInfo.addStringPermission(permission.getPermission());
-        }
+//        authorizationInfo.addRole(userInfo.getRole().getRoleName());
+//        for (Permission permission : userInfo.getRole().getPermissionList()) {
+//            authorizationInfo.addStringPermission(permission.getPermission());
+//        }
         return authorizationInfo;
     }
 
@@ -49,9 +59,12 @@ public class ShiroRealm extends AuthorizingRealm {
             String inputPassword = new String((char[]) token.getCredentials());
 
             if (user.getPassword().equals(inputPassword)) {
-                // 获取用户的角色信息
-//                Role role = roleService.getRoleByUserId(user.getId());
-//                user.setRole(role);
+                // 获取用户的角色信息以及对应的访问权限
+                Role role = roleService.getRoleByUserUuid(user.getUuid());
+                List<Permission> list = permissionService.getPermissionsByRoleUuid(role.getUuid());
+                role.setPermissionList(permissionService.getPermissionsByRoleUuid(role.getUuid()));
+                user.setRole(role);
+                redisUtil.set("currUser",user);
                 return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
             } else {
                 throw new AuthenticationException();

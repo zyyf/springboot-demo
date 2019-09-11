@@ -47,7 +47,7 @@ public class ShiroConfig {
         // 设置登录结果页面url
         bean.setLoginUrl("/login");
         bean.setSuccessUrl("/index");
-        bean.setUnauthorizedUrl("/error");
+//        bean.setUnauthorizedUrl("/error");
 
         bean.setFilterChainDefinitionMap(map);
         return bean;

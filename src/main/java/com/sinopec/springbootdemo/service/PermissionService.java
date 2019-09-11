@@ -12,7 +12,27 @@ public class PermissionService {
     @Autowired
     private PermissionDao permissionDao;
 
-    public List<Permission> getPermissionsByRoleId(int id) {
-        return permissionDao.queryPermissionsByRoleId(id);
+    public List<Permission> getPermissionsByRoleUuid(String roleUuid) {
+        return permissionDao.queryPermissionsByRoleUuid(roleUuid);
+    }
+
+    public Permission getPermissionByUuid(String pUuid) {
+        return permissionDao.queryPermissionByUuid(pUuid);
+    }
+
+    public List<Permission> getAllPermissionPage(int limit, int page) {
+        return permissionDao.queryAllPermissionPage(limit, page);
+    }
+
+    public int getPermissionCount() {
+        return permissionDao.getPermissionCount();
+    }
+
+    public List<Permission> getAllPermission() {
+        return permissionDao.queryAllPermission();
+    }
+
+    public void insertPermission(Permission p) {
+        permissionDao.insertPermission(p);
     }
 }
