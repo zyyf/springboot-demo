@@ -9,6 +9,7 @@ import com.sinopec.springbootdemo.service.RoleService;
 import com.sinopec.springbootdemo.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/userList")
-    public LayuiTableResultUtil<List> getUserList(Model model, HttpServletRequest request) throws IOException {
+    public LayuiTableResultUtil<List> getUserList(HttpServletRequest request) throws IOException {
         RequiredUtil requiredUtil = new RequiredUtil();
         if (!requiredUtil.Required(request.getParameter("limit").trim())) {
             return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
@@ -46,13 +47,28 @@ public class UserController {
 
         int limit = Integer.parseInt(request.getParameter("limit").trim());
         int page = Integer.parseInt(request.getParameter("page").trim());
+        String searchedUsername = request.getParameter("username");
 
-        List<User> userList = userService.getAllUserPage(limit, page);
-        int userCount = userService.getUserCount();
+        List<User> userList;
+        int userCount;
+
+        if (searchedUsername == null || searchedUsername.isEmpty()) {
+            userList = userService.getAllUserPage(limit, page);
+            userCount = userService.getUserCount();
+        } else {
+            userList = new ArrayList<>();
+            try {
+                userList.add(userService.getUserByUserName(searchedUsername));
+                userCount = 1;
+            } catch (EmptyResultDataAccessException e) {
+                userCount = 0;
+            }
+        }
 
         for (User user : userList) {
             user.setRole(roleService.getRoleByUserUuid(user.getUuid()));
         }
+
         LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("", userList, 0, userCount);
 
         if (userList != null) {

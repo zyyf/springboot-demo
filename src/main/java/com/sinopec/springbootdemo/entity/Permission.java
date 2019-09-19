@@ -14,6 +14,17 @@ public class Permission {
     private String parentName;
     private int delFlag;
 
+    public boolean isPermitted; // 用于在角色管理界面获取某角色是否被允许拥有该权限，经测试private无法正常工作
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Permission) {
+            Permission p = (Permission) obj;
+            return this.uuid.equals(p.getUuid());
+        }
+        return super.equals(obj);
+    }
+
     public int getType() {
         return type;
     }
@@ -85,4 +96,12 @@ public class Permission {
     public void setDelFlag(int delFlag) {
         this.delFlag = delFlag;
     }
+
+//    public boolean isPermitted() {
+//        return isPermitted;
+//    }
+//
+//    public void setPermitted(boolean permitted) {
+//        this.isPermitted = permitted;
+//    }
 }

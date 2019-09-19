@@ -18,7 +18,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">入口地址</label>
             <div class="layui-input-inline">
-                <input type="text" th:field="*{url}" lay-verify="required"
+                <input type="text" th:field="*{url}"
                        placeholder="" autocomplete="off" class="layui-input"
                        value="">
             </div>
@@ -54,10 +54,9 @@
             form.on('submit(addPermission)', function (data) {
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);
-                // window.parent.location.reload();
-                window.parent.parent.location.reload();
+                window.parent.location.reload(); // 刷新父页面
             });
         });
     </script>
 </div>
-</html>
+</html >

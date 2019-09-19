@@ -23,8 +23,7 @@ public class UserDao {
     private DateUtil dateUtil;
 
     public User queryUserByUserName(String userName) {
-        String sql = "SELECT * FROM user WHERE USERNAME=?";
-//        RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
+        String sql = "SELECT * FROM user WHERE USERNAME=? AND USER_DEL=0";
         User user = jdbcTemplate.queryForObject(sql, new UserRowMapper(), userName);
         return user;
     }
@@ -36,7 +35,7 @@ public class UserDao {
     }
 
     public int getUserCount() {
-        String sql = "SELECT count(USER_AutoID) FROM user";
+        String sql = "SELECT count(USER_AutoID) FROM user WHERE USER_DEL=0";
         Integer userCount = jdbcTemplate.queryForObject(sql, Integer.class);
         return userCount;
     }

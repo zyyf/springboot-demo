@@ -23,13 +23,13 @@ public class PermissionDao {
     private DateUtil dateUtil;
 
     public List<Permission> queryPermissionsByRoleUuid(String roleUuid) {
-        String sql = "SELECT * FROM permission, role_permission WHERE permission.PERMISSION_UUID = role_permission.PERMISSION_UUID AND ROLE_UUID = ?";
+        String sql = "SELECT * FROM permission, role_permission WHERE permission.PERMISSION_UUID = role_permission.PERMISSION_UUID AND ROLE_UUID = ? AND PERMISSION_DEL=0 AND RP_DEL=0";
         List<Permission> pList = jdbcTemplate.query(sql, new PermissionRowMapper(), roleUuid);
         return pList;
     }
 
     public Permission queryPermissionByUuid(String permissionUuid) {
-        String sql = "SELECT * FROM permission WHERE PERMISSION_UUID=?";
+        String sql = "SELECT * FROM permission WHERE PERMISSION_UUID=? AND PERMISSION_DEL=0";
         Permission p;
         try {
             p = jdbcTemplate.queryForObject(sql, new PermissionRowMapper(), permissionUuid);
@@ -46,7 +46,7 @@ public class PermissionDao {
     }
 
     public int getPermissionCount() {
-        String sql = "SELECT count(PERMISSION_AutoID) FROM permission";
+        String sql = "SELECT count(PERMISSION_AutoID) FROM permission WHERE PERMISSION_DEL=0";
         Integer permissionCount = jdbcTemplate.queryForObject(sql, Integer.class);
         return permissionCount;
     }
@@ -60,5 +60,21 @@ public class PermissionDao {
     public void insertPermission(Permission p) {
         String sql = "INSERT INTO permission VALUES(null,?,?,?,?,?,?,?)";
         jdbcTemplate.update(sql, p.getName(), p.getUrl(), dateUtil.getNowDateString(), UUID.randomUUID().toString(), p.getType(), p.getParentUuid(), 0);
+    }
+
+    public Permission queryPermissionByPName(String pName) {
+        String sql = "SELECT * FROM permission WHERE PERMISSION_NAME = ? AND PERMISSION_DEL=0";
+        Permission p = jdbcTemplate.queryForObject(sql, new PermissionRowMapper(), pName);
+        return p;
+    }
+
+    public void deleteRolePermissionByUuid(String roleUuid, String permissionUuid) {
+        String sql = "UPDATE role_permission SET RP_DEL=1 WHERE ROLE_UUID=? AND PERMISSION_UUID=?";
+        jdbcTemplate.update(sql, roleUuid, permissionUuid);
+    }
+
+    public void insertRolePermissionByUuid(String roleUuid, String permissionUuid) {
+        String sql = "INSERT INTO role_permission VALUES(null,?,?,?,?,?)";
+        jdbcTemplate.update(sql, roleUuid, permissionUuid, dateUtil.getNowDateString(), 0, UUID.randomUUID().toString());
     }
 }

@@ -3,13 +3,33 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="../css/layui.css">
+    <style>
+        .layui-table-cell .layui-form-checkbox[lay-skin="primary"]{
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
 </head>
 <div>
-    <div class="layui-btn-group">
-        <button type="button" class="layui-btn layui-btn-primary" onclick="permissionAdd()">增加</button>
-        <button type="button" class="layui-btn layui-btn-primary">编辑</button>
-        <button type="button" class="layui-btn layui-btn-primary">删除</button>
+    <div class="layui-row" style="width: 1000">
+        <div class="layui-col-md6">
+            <div class="layui-btn-group">
+                <button type="button" class="layui-btn layui-btn-primary" onclick="permissionAdd()">增加</button>
+                <button type="button" class="layui-btn layui-btn-primary">编辑</button>
+                <button type="button" class="layui-btn layui-btn-primary">删除</button>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-col-md6">
+                搜索权限：
+                <div class="layui-inline">
+                    <input class="layui-input" name="id" id="searchValue" autocomplete="off">
+                </div>
+                <button class="layui-btn" data-type="reload" id="searchBtn">搜索</button>
+            </div>
+        </div>
     </div>
+
     <table id="permissionTable" lay-filter="table"></table>
     <script src="../layui.js"></script>
     <script th:inline="none">
@@ -25,9 +45,11 @@
                     , type: 'asc'
                 }
                 , width: 1000
+                // , height: 470
                 , limits: [10]
                 , cols: [[ //表头
-                    {field: 'autoId', title: '序号', sort: true}
+                    {type: 'checkbox'}
+                    , {field: 'autoId', title: '序号', sort: true}
                     , {field: 'name', title: '权限名称'}
                     , {field: 'url', title: '入口地址'}
                     , {field: 'parentName', title: '上级权限'}
@@ -53,6 +75,27 @@
                 ]]
             });
 
+            // 搜索时重载
+            var $ = layui.$, active = {
+                reload: function () {
+                    var searchValue = $('#searchValue');
+
+                    //执行重载
+                    table.reload('permissionTable', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: {
+                            permissionName: searchValue.val()
+                        }
+                    }, 'data');
+                }
+            };
+
+            $('#searchBtn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
         });
 
         function permissionAdd() {

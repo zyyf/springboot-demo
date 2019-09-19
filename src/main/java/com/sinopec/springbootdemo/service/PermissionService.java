@@ -35,4 +35,17 @@ public class PermissionService {
     public void insertPermission(Permission p) {
         permissionDao.insertPermission(p);
     }
+
+    public Permission getPermissionByName(String pName) {
+        Permission p = permissionDao.queryPermissionByPName(pName);
+        return p;
+    }
+
+    public void deleteRolePermissionByUuid(String roleUuid, String permissionUuid) {
+        permissionDao.deleteRolePermissionByUuid(roleUuid, permissionUuid);
+    }
+
+    public void insertRolePermissionByUuid(String roleUuid, String permissionUuid) {
+        permissionDao.insertRolePermissionByUuid(roleUuid, permissionUuid);
+    }
 }

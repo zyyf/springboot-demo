@@ -50,7 +50,7 @@
                     <dl class="layui-nav-child">
                         <dd th:each="childMenu:${menuList}" th:if="${childMenu.parentUuid} eq ${menu.uuid}"><a
                                 th:lay-href="${childMenu.url}" href="javascript:;" th:id="${childMenu.uuid}"
-                                th:type="${childMenu.type}" style="padding-left: 30px">[[${childMenu.name}]] </a>
+                                th:type="${childMenu.type}" style="padding-left: 30px">[[${childMenu.name}]]</a>
                             <ol class="layui-nav-child layui-bg-blue" th:if="${childMenu.type} eq 2">
                                 <li th:each="thirdMenu:${menuList}"
                                     th:if="${thirdMenu.parentUuid} eq ${childMenu.uuid}">
@@ -77,10 +77,10 @@
         </div>
     </div>
 
-<!--    <div class="layui-footer">-->
-<!--        &lt;!&ndash; 底部固定区域 &ndash;&gt;-->
-<!--        © layui.com - 底部固定区域-->
-<!--    </div>-->
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
 </div>
 <script src="./layui.js"></script>
 <script th:inline="javascript">
@@ -97,7 +97,7 @@
                 element.tabAdd('demo', {
                     title: data[0].text
                     ,
-                    content: '<iframe style="height: 100%;width: 100%;position: absolute" src="' + $(this).attr("lay-href") + '" scrolling="no" frameborder="0"></iframe>' //支持传入html
+                    content: '<iframe style="height: 90%;width: 100%;position: absolute" src="' + $(this).attr("lay-href") + '" scrolling="no" frameborder="0"></iframe>' //支持传入html
                     ,
                     id: data[0].id
                 });

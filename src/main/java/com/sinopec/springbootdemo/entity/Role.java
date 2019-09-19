@@ -4,19 +4,19 @@ import java.util.Date;
 import java.util.List;
 
 public class Role {
-    private String uuid;
+    private String roleUuid;
     private String roleName;
     private Date createTime;
     private int delFlag;
 
     private List<Permission> permissionList;
 
-    public String getUuid() {
-        return uuid;
+    public String getRoleUuid() {
+        return roleUuid;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setRoleUuid(String roleUuid) {
+        this.roleUuid = roleUuid;
     }
 
     public String getRoleName() {

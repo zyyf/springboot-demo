@@ -25,7 +25,19 @@ public class RoleService {
         roleDao.insertUserRole(user, role);
     }
 
-    public Role getRoleByUuid(String roleUuid){
+    public Role getRoleByUuid(String roleUuid) {
         return roleDao.queryRoleByRoleUuid(roleUuid);
+    }
+
+    public List<Role> getAllRolePage(int limit, int page) {
+        return roleDao.queryAllRoleListPage(limit, page);
+    }
+
+    public int getRoleCount() {
+        return roleDao.getRoleCount();
+    }
+
+    public Role getRoleByName(String roleName) {
+        return roleDao.queryRoleByName(roleName);
     }
 }

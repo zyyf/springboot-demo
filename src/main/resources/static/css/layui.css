@@ -1,4 +1,4 @@
-/** layui-v2.5.4 MIT License By https://www.layui.com */
+/** layui-v2.5.5 MIT License By https://www.layui.com */
 .layui-inline, img {
     display: inline-block;
     vertical-align: middle
@@ -3126,10 +3126,8 @@ a cite {
 }
 
 .layui-table-cell .layui-form-checkbox[lay-skin=primary] {
-    /*top: -1px;*/
-    /*padding: 0*/
-    top: 50%;
-    transform: translateY(-50%);
+    top: -1px;
+    padding: 0
 }
 
 .layui-table-cell .layui-table-link {

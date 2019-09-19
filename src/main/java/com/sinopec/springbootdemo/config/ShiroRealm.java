@@ -61,8 +61,8 @@ public class ShiroRealm extends AuthorizingRealm {
             if (user.getPassword().equals(inputPassword)) {
                 // 获取用户的角色信息以及对应的访问权限
                 Role role = roleService.getRoleByUserUuid(user.getUuid());
-                List<Permission> list = permissionService.getPermissionsByRoleUuid(role.getUuid());
-                role.setPermissionList(permissionService.getPermissionsByRoleUuid(role.getUuid()));
+                List<Permission> list = permissionService.getPermissionsByRoleUuid(role.getRoleUuid());
+                role.setPermissionList(permissionService.getPermissionsByRoleUuid(role.getRoleUuid()));
                 user.setRole(role);
                 redisUtil.set("currUser",user);
                 return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
