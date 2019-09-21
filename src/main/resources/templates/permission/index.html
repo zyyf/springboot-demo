@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="../css/layui.css">
     <style>
-        .layui-table-cell .layui-form-checkbox[lay-skin="primary"]{
+        .layui-table-cell .layui-form-checkbox[lay-skin="primary"] {
             top: 50%;
             transform: translateY(-50%);
         }
@@ -20,13 +20,11 @@
             </div>
         </div>
         <div class="layui-col-md6">
-            <div class="layui-col-md6">
-                搜索权限：
-                <div class="layui-inline">
-                    <input class="layui-input" name="id" id="searchValue" autocomplete="off">
-                </div>
-                <button class="layui-btn" data-type="reload" id="searchBtn">搜索</button>
+            搜索权限：
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="searchValue" autocomplete="off">
             </div>
+            <button class="layui-btn" data-type="reload" id="searchBtn">搜索</button>
         </div>
     </div>
 
@@ -71,7 +69,7 @@
                     //         }
                     //     }
                     // }
-                    , {field: 'createTime', title: '创建时间'}
+                    , {field: 'createTime', title: '创建时间', sort: true}
                 ]]
             });
 

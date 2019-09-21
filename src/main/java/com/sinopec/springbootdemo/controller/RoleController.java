@@ -3,12 +3,14 @@ package com.sinopec.springbootdemo.controller;
 import com.sinopec.springbootdemo.entity.Role;
 import com.sinopec.springbootdemo.myUtil.LayuiTableResultUtil;
 import com.sinopec.springbootdemo.myUtil.RequiredUtil;
+import com.sinopec.springbootdemo.service.PermissionService;
 import com.sinopec.springbootdemo.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,9 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private PermissionService permissionService;
 
     @RequestMapping("/index")
     public String roleIndex() {
@@ -65,5 +70,15 @@ public class RoleController {
             return list;
         }
         return null;
+    }
+
+    @ResponseBody
+    @RequestMapping("changeRolePermission")
+    public void changeRolePermission(@RequestParam(value = "roleUuid") String roleUuid, @RequestParam(value = "permissionUuid") String permissionUuid, @RequestParam(value = "isAdd") boolean isAdd) {
+        if (!isAdd) {
+            permissionService.deleteRolePermissionByUuid(roleUuid, permissionUuid);
+        } else {
+            permissionService.insertRolePermissionByUuid(roleUuid, permissionUuid);
+        }
     }
 }

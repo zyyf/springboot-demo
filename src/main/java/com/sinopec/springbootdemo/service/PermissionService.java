@@ -3,6 +3,7 @@ package com.sinopec.springbootdemo.service;
 import com.sinopec.springbootdemo.dao.PermissionDao;
 import com.sinopec.springbootdemo.entity.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +47,11 @@ public class PermissionService {
     }
 
     public void insertRolePermissionByUuid(String roleUuid, String permissionUuid) {
-        permissionDao.insertRolePermissionByUuid(roleUuid, permissionUuid);
+        try {
+            String rpUuid = permissionDao.queryRolePermissionByUuid(roleUuid, permissionUuid);
+            permissionDao.recoverExistRolePermissionByRPUuid(rpUuid);
+        } catch (EmptyResultDataAccessException e) {
+            permissionDao.insertRolePermissionByUuid(roleUuid, permissionUuid);
+        }
     }
 }

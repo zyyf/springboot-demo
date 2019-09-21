@@ -55,7 +55,7 @@
                     , {type: 'numbers', title: '序号'}
                     // , {field: 'autoId', title: '序号', sort: true}
                     , {field: 'roleName', title: '角色名'}
-                    , {field: 'createTime', title: '创建时间'}
+                    , {field: 'createTime', title: '创建时间', sort: true}
                     , {fixed: 'right', width: 150, align: 'center', toolbar: '#roleTool'}
                 ]]
             });
@@ -93,6 +93,7 @@
                     var layer = layui.layer;
                     layer.open({
                         type: 1
+                        , title: '权限设置'
                         , shadeClose: true
                         , offset: ['100px', '200px']
                         , area: ['auto', '625px']
@@ -143,6 +144,7 @@
                                     , data: {
                                         roleUuid: data['roleUuid']
                                         , permissionUuid: obj.data['uuid']
+                                        , isAdd: obj.checked
                                     }
                                 });
                             })

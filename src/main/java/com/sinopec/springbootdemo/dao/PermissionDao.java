@@ -68,6 +68,13 @@ public class PermissionDao {
         return p;
     }
 
+    // 查询role_permission中是否存在相应的记录，即使DEL为1（即已被删除）；如果存在则返回记录的UUID
+    public String queryRolePermissionByUuid(String roleUuid, String permissionUuid) {
+        String sql = "SELECT RP_UUID FROM role_permission WHERE ROLE_UUID=? AND PERMISSION_UUID=?";
+        String uuid = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(), roleUuid, permissionUuid);
+        return uuid;
+    }
+
     public void deleteRolePermissionByUuid(String roleUuid, String permissionUuid) {
         String sql = "UPDATE role_permission SET RP_DEL=1 WHERE ROLE_UUID=? AND PERMISSION_UUID=?";
         jdbcTemplate.update(sql, roleUuid, permissionUuid);
@@ -76,5 +83,10 @@ public class PermissionDao {
     public void insertRolePermissionByUuid(String roleUuid, String permissionUuid) {
         String sql = "INSERT INTO role_permission VALUES(null,?,?,?,?,?)";
         jdbcTemplate.update(sql, roleUuid, permissionUuid, dateUtil.getNowDateString(), 0, UUID.randomUUID().toString());
+    }
+
+    public void recoverExistRolePermissionByRPUuid(String rpUuid) {
+        String sql = "UPDATE role_permission SET RP_DEL=0 WHERE RP_UUID=?";
+        jdbcTemplate.update(sql, rpUuid);
     }
 }
