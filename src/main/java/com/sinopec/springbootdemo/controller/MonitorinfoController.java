@@ -49,4 +49,64 @@ public class MonitorinfoController {
 
         return list;
     }
+
+    @RequestMapping("/car_plate")
+    public String carPlate() {
+        return "monitorinfo/car_plate";
+    }
+
+    @ResponseBody
+    @RequestMapping("/carPlateList")
+    public LayuiTableResultUtil<List> getCarPlateList(HttpServletRequest request) throws IOException {
+        RequiredUtil requiredUtil = new RequiredUtil();
+        if (!requiredUtil.Required(request.getParameter("limit").trim())) {
+            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
+        }
+        if (!requiredUtil.Required(request.getParameter("page").trim())) {
+            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
+        }
+
+        int limit = Integer.parseInt(request.getParameter("limit").trim());
+        int page = Integer.parseInt(request.getParameter("page").trim());
+
+        if (request.getParameter("startDate") != null) {
+            System.out.println("yes");
+        }
+        List<Monitorinfo> monitorinfoList = monitorinfoService.getAllCarPlateInfoPage(limit, page);
+        int infoCount = monitorinfoService.getCarPlateInfoCount();
+
+        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<>("", monitorinfoList, 0, infoCount);
+
+        return list;
+    }
+
+    @RequestMapping("/humanFlow")
+    public String humanFlow() {
+        return "monitorinfo/human_flow";
+    }
+
+    @ResponseBody
+    @RequestMapping("/humanFlowList")
+    public LayuiTableResultUtil<List> getHumanFlow(HttpServletRequest request) throws IOException {
+        RequiredUtil requiredUtil = new RequiredUtil();
+        if (!requiredUtil.Required(request.getParameter("limit").trim())) {
+            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
+        }
+        if (!requiredUtil.Required(request.getParameter("page").trim())) {
+            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
+        }
+
+        int limit = Integer.parseInt(request.getParameter("limit").trim());
+        int page = Integer.parseInt(request.getParameter("page").trim());
+
+        if (request.getParameter("startDate") != null) {
+            System.out.println("yes");
+        }
+        List<Monitorinfo> monitorinfoList = monitorinfoService.getAllHumanFlowInfoPage(limit, page);
+        int infoCount = monitorinfoService.getHumanFlowInfoCount();
+
+        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<>("", monitorinfoList, 0, infoCount);
+
+        return list;
+    }
 }

@@ -26,8 +26,10 @@
     </script>
     <script src="../layui.js"></script>
     <script th:inline="none">
-        layui.use(['table', 'layer', 'laydate'], function () {
+        layui.use(['table', 'layer', 'laydate', 'carousel'], function () {
+            var carousel = layui.carousel;
             var table = layui.table;
+            var laydate = layui.laydate;
             //第一个实例
             table.render({
                 elem: '#table'
@@ -36,8 +38,7 @@
                 , width: 1000
                 , limits: [10]
                 , cols: [[ //表头
-                    {type: 'checkbox'}
-                    , {type: 'numbers', title: '序号'}
+                    {type: 'numbers', title: '序号'}
                     , {
                         field: 'createTime', title: '记录时间', sort: true, templet: function (data) {
                             return layui.util.toDateString(data.createTime);
@@ -49,7 +50,6 @@
                 ]]
             });
 
-            var laydate = layui.laydate;
 
             laydate.render({
                 elem: '#searchTimeRange'
@@ -96,19 +96,37 @@
                 var tr = obj.tr;
 
                 var layer = layui.layer;
-                var content;
+
+                var image1 = '<img style="padding: 10px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569064690973&di=c9a6859109dabfff239d63e828e0c797&imgtype=0&src=http%3A%2F%2Fa2.att.hudong.com%2F66%2F66%2F31300542599495140677667021668_140.jpg"/>';
+                var image2 = '<img style="padding: 10px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569131418310&di=1f2f27b1fce9a0633bce181e570e755d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201509%2F14%2F20150914203139_xdXjB.jpeg"/>';
+
+                var content = '<div class="layui-carousel" id="imageView"><div carousel-item>' +
+                    '<div>' + image1 + '</div>' +
+                    '<div>' + image2 + '</div>' +
+                    '</div></div>';
                 if (layEvent === 'image1View') {
-                    content = '<img style="padding: 10px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569064690973&di=c9a6859109dabfff239d63e828e0c797&imgtype=0&src=http%3A%2F%2Fa2.att.hudong.com%2F66%2F66%2F31300542599495140677667021668_140.jpg"/>';
                 } else if (layEvent === 'image2View') {
-                    content = '<img style="padding: 10px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569064690973&di=c9a6859109dabfff239d63e828e0c797&imgtype=0&src=http%3A%2F%2Fa2.att.hudong.com%2F66%2F66%2F31300542599495140677667021668_140.jpg"/>';
                 } else if (layEvent === 'msgView') {
                     content = '<div style="padding: 10px"><p>' + obj.data['infoData'] + '</p></div>'
                 }
                 layer.open({
                     type: 1
+                    , offset: ['20px', '200px']
                     , shadeClose: true
                     , title: false
                     , content: content
+                    , success: function (layero, index) {
+                        // layer.style(index, {
+                        //     background: 'transparent'
+                        // });
+                        carousel.render({
+                            elem: '#imageView'
+                            // , width: '400px'
+                            // , height: '400px'
+                            , arrow: 'always'
+                            , autoplay: false
+                        });
+                    }
                 });
             })
         });

@@ -18,15 +18,16 @@ public class MonitorinfoDao {
     @Autowired
     private DateUtil dateUtil;
 
-    public List<Monitorinfo> queryAllHumanFaceMonitorinfoPage(int limit, int page) {
-        String sql = "SELECT * FROM monitorinfo WHERE state=0 AND lcommand=4370 ORDER BY datetime1 LIMIT " + (page - 1) * limit + "," + limit;
+    public List<Monitorinfo> queryAllMonitorinfoPage(int type, int limit, int page) {
+        String sql = "SELECT * FROM monitorinfo WHERE state=0 AND lcommand=" + type + " ORDER BY datetime1 LIMIT " + (page - 1) * limit + "," + limit;
         List<Monitorinfo> monitorinfoList = jdbcTemplate.query(sql, new MonitorinfoRowMapper());
         return monitorinfoList;
     }
 
-    public int getHumanFaceInfoCount() {
-        String sql = "SELECT count(_id) FROM monitorinfo WHERE state=0 AND lcommand=4370";
+    public int getInfoCount(int type) {
+        String sql = "SELECT count(_id) FROM monitorinfo WHERE state=0 AND lcommand=" + type;
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
         return count;
     }
+
 }

@@ -14,10 +14,26 @@ public class MonitorinfoService {
     private MonitorinfoDao monitorinfoDao;
 
     public List<Monitorinfo> getAllHumanFaceInfoPage(int limit, int page) {
-        return monitorinfoDao.queryAllHumanFaceMonitorinfoPage(limit, page);
+        return monitorinfoDao.queryAllMonitorinfoPage(4370, limit, page);
     }
 
     public int getHumanFaceInfoCount() {
-        return monitorinfoDao.getHumanFaceInfoCount();
+        return monitorinfoDao.getInfoCount(4370);
+    }
+
+    public List<Monitorinfo> getAllCarPlateInfoPage(int limit, int page) {
+        return monitorinfoDao.queryAllMonitorinfoPage(12368, limit, page);
+    }
+
+    public int getCarPlateInfoCount() {
+        return monitorinfoDao.getInfoCount(12368);
+    }
+
+    public List<Monitorinfo> getAllHumanFlowInfoPage(int limit, int page) {
+        return monitorinfoDao.queryAllMonitorinfoPage(4355, limit, page);
+    }
+
+    public int getHumanFlowInfoCount() {
+        return monitorinfoDao.getInfoCount(4355);
     }
 }
