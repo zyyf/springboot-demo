@@ -96,7 +96,7 @@
                         , title: '权限设置'
                         , shadeClose: true
                         , offset: ['100px', '200px']
-                        , area: ['auto', '625px']
+                        , area: ['auto', '370px']
                         // , btn: '提交修改'
                         , content: '<div style="padding: 10px"><table id="pList" lay-filter="innerTable"></table></div>'
                         , success: function (layero, index) {
@@ -106,9 +106,9 @@
                                 , id: 'pList'
                                 , url: '/permission/permissionList'
                                 , page: true
-                                , limits: [10]
+                                , limit: 5
                                 , width: 600
-                                , height: 480
+                                , height: 280
                                 , where: {
                                     roleUuid: data['roleUuid']
                                     , toGetRolePermission: 'true'

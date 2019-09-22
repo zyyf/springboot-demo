@@ -12,19 +12,19 @@
     <div class="layui-header">
         <div class="layui-logo">加油站智能云平台</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
-<!--        <ul class="layui-nav layui-layout-left">-->
-<!--            <li class="layui-nav-item"><a href="">控制台</a></li>-->
-<!--            <li class="layui-nav-item"><a href="">商品管理</a></li>-->
-<!--            <li class="layui-nav-item"><a href="">用户</a></li>-->
-<!--            <li class="layui-nav-item">-->
-<!--                <a href="javascript:;">其它系统</a>-->
-<!--                <dl class="layui-nav-child">-->
-<!--                    <dd><a href="">邮件管理</a></dd>-->
-<!--                    <dd><a href="">消息管理</a></dd>-->
-<!--                    <dd><a href="">授权管理</a></dd>-->
-<!--                </dl>-->
-<!--            </li>-->
-<!--        </ul>-->
+        <!--        <ul class="layui-nav layui-layout-left">-->
+        <!--            <li class="layui-nav-item"><a href="">控制台</a></li>-->
+        <!--            <li class="layui-nav-item"><a href="">商品管理</a></li>-->
+        <!--            <li class="layui-nav-item"><a href="">用户</a></li>-->
+        <!--            <li class="layui-nav-item">-->
+        <!--                <a href="javascript:;">其它系统</a>-->
+        <!--                <dl class="layui-nav-child">-->
+        <!--                    <dd><a href="">邮件管理</a></dd>-->
+        <!--                    <dd><a href="">消息管理</a></dd>-->
+        <!--                    <dd><a href="">授权管理</a></dd>-->
+        <!--                </dl>-->
+        <!--            </li>-->
+        <!--        </ul>-->
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
@@ -78,7 +78,7 @@
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        © 
+        ©
     </div>
 </div>
 <script src="./layui.js"></script>
@@ -91,12 +91,25 @@
         element.on('nav(test)', function (data) {
             var exist = $(".layui-tab-title li[lay-id='" + data[0].id + "']").length; //判断是否存在tab
             if ($(this).attr("type") == "3" && exist == 0) {
+                var content = '<iframe style="height: 90%;width: 100%;position: absolute" src="' +
+                    $(this).attr("lay-href") +
+                    '" scrolling="no" frameborder="0"></iframe>';
+
                 element.tabAdd('demo', {
                     title: data[0].text
-                    ,
-                    content: '<iframe style="height: 90%;width: 100%;position: absolute" src="' + $(this).attr("lay-href") + '" scrolling="no" frameborder="0"></iframe>' //支持传入html
-                    ,
-                    id: data[0].id
+                    , content: content
+                    , id: data[0].id
+                });
+                FrameWH();
+                $(".layui-tab").css("top", "100px");
+
+                function FrameWH() {
+                    var h = $(window).height() - 100;
+                    $("iframe").css("height", h + "px");
+                }
+
+                $("window").resize(function () {
+                    FrameWH();
                 });
             }
 
